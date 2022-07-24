@@ -4,17 +4,22 @@
 class Solution {
 public:
     int firstBadVersion(int n) {
-     int s = 1;
-        int e = n;
-        int mid;
-        while(s<e){
-         mid = s+(e-s)/2;
-           if(isBadVersion(mid)== false)
-                s = mid +1;
-           
-              if(isBadVersion(mid)== true)
-                e = mid ;   
+        
+        int l=1;
+        int h=n;
+        
+        while(l<=h)
+        {
+            int m=l + (h-l)/2;
+            if(isBadVersion(m)==true)
+            {
+                h=m-1;;
+            }
+            else
+            {
+                l=m+1;
+            }
         }
-        return s;
+        return l;
     }
 };

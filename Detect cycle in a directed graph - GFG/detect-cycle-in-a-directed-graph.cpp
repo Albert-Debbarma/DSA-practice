@@ -4,45 +4,37 @@ using namespace std;
 
 // } Driver Code Ends
 class Solution {
-    private:
-             bool dfscheck(int node,vector<int> adj[],int vis[], int p[]){
-             vis[node] = 1;
-             p[node] = 1;
-             for(auto it : adj[node]){
-                if(!vis[it]) {
-               if  ( dfscheck(it,adj, vis, p) == true ){
-                  return true; 
-               } 
-                }
-                else if(p[it]){
-                    return true;
-                }
-             }
-             
-             p[node] = 0;
-             return false;
-             
-             
-         }
-  
   public:
-         
-  
-  
-  
-  
-  
-     bool isCyclic(int V, vector<int> adj[]) {
-    int vis[V] = {0};
-    int p[V] = {0};
-    for(int i = 0 ; i<V; i++){
-       if(!vis[i]){
-           if(dfscheck(i,adj,vis,p) == true)
-        return true; 
-       }
-    }
-    return false;
-    
+    // Function to detect cycle in a directed graph.
+    bool isCyclic(int V, vector<int> adj[]) {
+    int ind[V] = {0};
+	   for(int i = 0 ; i<V; i++){
+	       for(auto it : adj[i]){
+	           ind[it]++;
+	       }
+	   }
+	   
+	   queue<int>q;
+	   for(int i = 0 ; i< V ; i++){
+	      if(ind[i] == 0)
+	      q.push(i);
+	   }
+int cnt =0;
+	  while(!q.empty()){
+	     int node = q.front();
+	     q.pop();
+	     cnt++;
+	     for(auto it : adj[node]){
+	         ind[it]--;
+	         if(ind[it] == 0)
+	         q.push(it);
+	     }
+	  }
+	 if(cnt == V) return false;
+	 else 
+	 return true;
+	   
+	   
     }
 };
 
